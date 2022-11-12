@@ -1,5 +1,6 @@
 package com.example.rickandmorty.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,17 +26,24 @@ class CharacterAdapter(val list: ArrayList<CharacterModel>) :
     class CharacterViewHolder(private val binding: ItemCharacterBinding) :
         ViewHolder(binding.root) {
         fun onBind(model: CharacterModel) {
-            binding.imageViewCharacter.load(model.image)
-            binding.textViewNameCharacter.text = model.name
-            binding.textViewStatus.text = model.status
-            binding.textViewSpecies.text = model.species
-            binding.textViewType.text = model.type
-            binding.textViewFirstSeen.text = model.gender
+            binding.ivCharacter.load(model.image)
+            binding.tvNameCharacter.text = model.name
+            binding.tvStatus.text = model.status
+            binding.tvSpecies.text = model.species
+            binding.tvType.text = model.type
+            binding.tvFirstSeen.text = model.gender
         }
     }
 
     fun addNewItems(characterModel: List<CharacterModel>) {
         list.addAll(characterModel)
         notifyDataSetChanged()
+    }
+    @SuppressLint("ResourceAsColor")
+    private fun checkStatus(model: CharacterModel, binding: ItemCharacterBinding) {
+        when (model.status.trim()) {
+            "Alive" -> binding.ivStatus.load(R.drawable.ic_status_green)
+            "Dead" -> binding.ivStatus.load(R.drawable.ic_status_red)
+        }
     }
 }
